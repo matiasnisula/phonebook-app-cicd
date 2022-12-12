@@ -140,6 +140,14 @@ app.delete("/api/persons/:id", (request, response, next) => {
     });
 });
 
+app.post("/api/testing/reset", async (request, response) => {
+  if (!process.env.NODE_ENV === "test") {
+    return response.status(400).end();
+  }
+  await Person.deleteMany({});
+  response.status(204).end();
+});
+
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: "unknown endpoint" });
 };
@@ -161,7 +169,7 @@ const errorHandler = (error, request, response, next) => {
 };
 
 app.use(errorHandler);
-const PORT = config.PORT || 8080;
+const PORT = config.PORT || 3003;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
