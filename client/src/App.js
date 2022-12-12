@@ -145,7 +145,7 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h2>Phonebook app CICD</h2>
       <Notification message={notification} messageType={notificationType} />
       <br></br>
       <Filter query={newFilter} handleInputFilter={handleFilterChange} />
