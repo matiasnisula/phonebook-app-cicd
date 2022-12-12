@@ -7,7 +7,7 @@
   "scripts": {
     "start-prod": "node index.js",
     "build": "webpack --mode production",
-    "eslint": "eslint .",
+    "eslint": "eslint './**/*.{js,jsx}'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
