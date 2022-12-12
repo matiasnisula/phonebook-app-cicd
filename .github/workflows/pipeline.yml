@@ -39,3 +39,35 @@ jobs:
           github.event_name == 'push' &&
           !contains( join( toJson(github.event.commits.*.message) ), '#skip' )
         run: flyctl deploy --remote-only
+      - name: Discord notification success
+        uses: rjstone/discord-webhook-notify@v1
+        if: |
+          success() && steps.deploy.outcome != 'skipped'
+        with:
+          severity: info
+          details: Build succeeded!
+          text: New version of phonebook app deployed
+          description: to https://wispy-brook-6426.fly.dev/ by ${{ github.repository_owner }}
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Discord notification build failed
+        uses: rjstone/discord-webhook-notify@v1
+        if: |
+          failure() && github.event_name == 'push'
+        with:
+          severity: error
+          text: Build failed!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
+  tag_release:
+      needs: [deployment_pipeline]
+      runs-on: ubuntu-20.04
+      steps:
+        - uses: actions/checkout@v3
+        - name: Bump version and push tag
+          if: |
+            github.event_name == 'push' &&
+            !contains( join( toJson(github.event.commits.*.message) ), '#skip' )
+          uses: anothrNick/github-tag-action@1.36.0
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            DEFAULT_BUMP: patch
