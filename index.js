@@ -1,4 +1,4 @@
-require("dotenv").config();
+const config = require("./server/utils/config");
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
@@ -30,12 +30,8 @@ app.use(
   })
 );
 
-//const url = process.env.MONGODB_URI;
-const password = "nisu1234";
-const url = `mongodb+srv://fullstack:${password}@cluster0.ivlibtg.mongodb.net/phonebookApp?retryWrites=true&w=majority`;
-
 mongoose
-  .connect(url)
+  .connect(config.MONGODB_URI)
   .then(() => {
     console.log("connected to MongoDb");
   })
@@ -165,7 +161,7 @@ const errorHandler = (error, request, response, next) => {
 };
 
 app.use(errorHandler);
-const PORT = process.env.PORT || 8080;
+const PORT = config.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

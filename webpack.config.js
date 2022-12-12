@@ -25,7 +25,14 @@ const config = {
           },
         ],
       },
+      {
+        test: /\.css$/,
+        loader: "css-loader",
+      },
     ],
+  },
+  resolve: {
+    extensions: ["*", ".js", ".jsx"],
   },
   plugins: [
     new webpack.ProvidePlugin({

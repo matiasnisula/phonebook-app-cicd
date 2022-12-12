@@ -1,7 +1,7 @@
 import React from "react";
 import personService from "./services/personService.js";
 import PersonForm from "./components/PersonForm.js";
-import { Persons } from "./components/Persons.js";
+import PersonsList from "./components/PersonsList";
 import Filter from "./components/Filter.js";
 import Notification from "./components/Notification.js";
 
@@ -107,6 +107,9 @@ const App = () => {
     const personToDelete = persons.find((person) => {
       return person.id === id;
     });
+    if (!window.confirm(`Delete ${personToDelete.name}?`)) {
+      return;
+    }
 
     personService
       .deletePerson(id)
@@ -155,7 +158,7 @@ const App = () => {
         handleInputNumber={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Persons
+      <PersonsList
         persons={newFilter.length === 0 ? persons.concat() : filterPersons()}
         handleDelete={deletePerson}
       />
