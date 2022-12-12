@@ -12,6 +12,7 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
+  plugins: ["react", "jest"],
   rules: {
     indent: ["error", 2],
     "linebreak-style": ["error", "unix"],
