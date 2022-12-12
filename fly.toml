@@ -1,6 +1,6 @@
-# fly.toml file generated for quiet-glade-7649 on 2022-09-20T16:30:34+03:00
+# fly.toml file generated for wispy-brook-6426 on 2022-12-12T16:24:28+02:00
 
-app = "quiet-glade-7649"
+app = "wispy-brook-6426"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
@@ -10,6 +10,12 @@ processes = []
 
 [env]
   PORT = "8080"
+
+[deploy]
+  release_command = "npm run build"
+
+[processes]
+  app = "node index.js"
 
 [experimental]
   allowed_public_ports = []
